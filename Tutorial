@@ -1,0 +1,56 @@
+Estou usando o processo HTTP e a API de nível 23.
+
+Preciso analisar meu URL e obter a resposta abaixo
+
+{
+    "response":{
+                "Usuário":"Lukas",
+                "Email":"lg@exemplo",
+                "Status":"Ativo",
+              },
+                "Result":"Ativo",
+}
+
+Abaixo Esta meu código:
+
+public class LoginActivity extends Activity {
+
+    JSONParser jsonparser = new JSONParser();
+    TextView titulo;
+    String ab;
+    JSONObject jobj = null;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.login);
+
+        new retrievedata().execute();
+
+    }
+
+    class retrievedata extends AsyncTask<String, String, String>{
+
+        @Override
+        protected String doInBackground(String... arg0) {
+            // TODO Stub de método gerado automaticamente
+            jobj = jsonparser.makeHttpRequest("url RAW pra obter resposta");
+
+            // verifique seu log para ver se há uma resposta json
+            Log.d("Dados attemp", jobj.toString());
+
+            try {
+                ab = jobj.getString("titulo");
+            } catch (JSONException e) {
+                // TODO Bloco de captura gerado automaticamente
+                e.printStackTrace();
+}
+            return ab;
+        }
+        protected void onPostExecute(String ab){
+
+            titulo.setText(ab);
+        }
+
+    }
+
+}
